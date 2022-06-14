@@ -57,8 +57,8 @@ io.on('connection', (socket) => {
 });
 
 app.post('/new-message', (req, res) => {
-  const { newMessage } = req.body;
-  io.emit("new-message", { msg: newMessage})
+  // const { newMessage } = req.body;
+  io.emit("new-message", { msg: "test-message"})
   res.end("end of new message");
 });
 
