@@ -52,12 +52,14 @@ app.post("/list-messages", listAllMessagesWithParticpant, (req, res) => {
 });
 
 io.on('connection', (socket) => {
+  // console.log('socket', socket)
   console.log('a user connected');
 });
 
 app.post('/new-message', (req, res) => {
-  console.log('test')
-  io.emit({ test: "test"})
+  const { newMessage } = req.body;
+  io.emit("new-message", { msg: newMessage})
+  res.end("end of new message");
 });
 
 // app.listen(port, () => {
