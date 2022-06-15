@@ -15,7 +15,6 @@ const createConversation = (req, res, next) => {
 
 const addParticipantToConversation = (req, res, next) => {
   const { conversationSid } = res.locals;
-  console.log(req.body);
   const { twilioNumber, participantNumber } = req.body;
   console.log("IN ADD PARTICIPANTS");
   client.conversations
