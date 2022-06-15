@@ -48,8 +48,8 @@ app.post("/send-message", sendMessageToParticipant, (req, res) => {
 });
 
 app.post("/list-messages", listAllMessagesWithParticpant, (req, res) => {
-  const { messages } = res.locals;
-  res.end({ "messages" : messages })
+  const { messages, particpantId } = res.locals;
+  res.end({ [particpantId] : messages })
   // res.end("test");
 });
 

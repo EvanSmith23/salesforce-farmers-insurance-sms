@@ -47,12 +47,13 @@ const sendMessageToParticipant = (req, res, next) => {
 };
 
 const listAllMessagesWithParticpant = (req, res, next) => {
-  const { conversationSid } = req.body;
+  const { conversationSid, participantId } = req.body;
   client.conversations
     .conversations(conversationSid)
     .messages.list({ limit: 20 })
     .then((messages) => {
       res.locals.messages = messages;
+      res.locals.participantId;
     })
     .then(() => next())
     .catch((err) => console.log("ERR", err));
