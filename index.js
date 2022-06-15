@@ -49,7 +49,7 @@ app.post("/send-message", sendMessageToParticipant, (req, res) => {
 
 app.post("/list-messages", listAllMessagesWithParticpant, (req, res) => {
   const { messages } = res.locals;
-  res.end(messages)
+  res.end({ "messages" : messages })
   // res.end("test");
 });
 

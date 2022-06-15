@@ -48,12 +48,10 @@ const sendMessageToParticipant = (req, res, next) => {
 
 const listAllMessagesWithParticpant = (req, res, next) => {
   const { conversationSid } = req.body;
-  const messages = [];
   client.conversations
     .conversations(conversationSid)
     .messages.list({ limit: 20 })
     .then((messages) => {
-      messages.forEach((m) => messages.push(m.body));
       res.locals.messages = messages;
     })
     .then(() => next())
