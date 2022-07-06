@@ -50,7 +50,7 @@ const listAllMessagesWithParticpant = (req, res, next) => {
   const { conversationSid, participantId } = req.body;
   client.conversations
     .conversations(conversationSid)
-    .messages.list({ limit: 20 })
+    .messages.list({})
     .then((messages) => {
       res.locals.messages = messages;
       res.locals.participantId;
