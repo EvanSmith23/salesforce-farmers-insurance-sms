@@ -16,6 +16,7 @@ const io = new Server(server, {
   },
 });
 
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(cors());
 
@@ -24,6 +25,7 @@ const {
   addParticipantToConversation,
   sendMessageToParticipant,
   listAllMessagesWithParticpant,
+  deleteConversation
 } = require("./middleware/conversations");
 
 app.get("/", (req, res) => {
@@ -37,7 +39,8 @@ app.post(
   addParticipantToConversation,
   (req, res) => {
     const { conversationSid } = res.locals;
-    res.end(conversationSid);
+    console.log("conversationSid", conversationSid)
+    res.json({ conversationSid: conversationSid });
   }
 );
 
@@ -49,7 +52,7 @@ app.post("/send-message", sendMessageToParticipant, (req, res) => {
 
 app.post("/list-messages", listAllMessagesWithParticpant, (req, res) => {
   const { messages, particpantId } = res.locals;
-  res.end({ [particpantId] : messages })
+  res.json(messages)
   // res.end("test");
 });
 
@@ -62,6 +65,11 @@ app.post("/new-message", (req, res) => {
   console.log(req.body)
   io.emit("new-message", req.body);
   res.end("end of new message");
+});
+
+app.delete("/delete-conversation", deleteConversation, (req, res) => {
+  const { conversationSid } = res.locals;
+  res.end(`Conversation '${conversationSid}' deleted successfully`)
 });
 
 server.listen(port, () => {
