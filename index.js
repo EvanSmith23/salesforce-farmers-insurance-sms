@@ -46,8 +46,7 @@ app.post(
 
 // converstaionId
 app.post("/send-message", sendMessageToParticipant, (req, res) => {
-  console.log("test");
-  res.end("message has been sent");
+  res.json({ status: "success" });
 });
 
 app.post("/list-messages", listAllMessagesWithParticpant, (req, res) => {
