@@ -63,6 +63,7 @@ const listAllMessagesWithParticpant = (req, res, next) => {
 
 const deleteConversation = (req, res, next) => {
   const { conversationSid } = req.body;
+  console.log('inside del', conversationSid)
   res.locals.conversationSid = conversationSid;
 
   client.conversations.conversations(conversationSid)
