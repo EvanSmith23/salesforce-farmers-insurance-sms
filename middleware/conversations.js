@@ -17,52 +17,35 @@ const createConversation = (req, res, next) => {
 };
 
 
-const listAllMessagesWithParticpant = (req, res, next) => {
-  console.log("listAllMessagesWithParticpant");
+const listAllMessagesWithParticpant = (conversationSid) => {
+  console.log("LIST ALL MESSAGES");
 
-  if (res.locals.conversationSid) {
+  if (conversationSid) {
     client.conversations
-    .conversations(res.locals.conversationSid)
+    .conversations(conversationSid)
     .messages.list({})
     .then((messages) => {
       console.log("Messages: ", messages);
       res.locals.messages = messages;
       res.locals.participantId;
     })
-    .then(() => next())
     .catch((err) => console.log("Error in 'listAllMessagesWithParticpant' middleware: ", err));
   }
-};
 
-const addParticipantToConversation = (req, res, next) => {
-  console.log("IN ADD PARTICIPANTS");
-  if (res.locals.conversationSid) {
-    client.conversations.v1.conversations(res.locals.conversationSid).participants.create({
-      "messagingBinding.address": "+13122610622",
-      "messagingBinding.proxyAddress": "+16812983972",
-    })
-    .then((participant) => {
-      console.log("INSIDE INSIDe", participant);
-      console.log(participant.sid);
-      res.locals.participantSid = participant.sid;
-      next();
-    })
-    .catch((err) => console.log("Error in 'addParticipantToConversation' middleware: ", err));
-  }
+  return;
 };
 
 // MBc6c91ee2369d4e5081e81457feeb31bc
 const sendMessageToParticipant = (conversationSid, body) => {
+  console.log("ADD MESSAGE TO CONVERSATION");
+
   if (conversationSid) {
-    client.conversations
-    .conversations(conversationSid)
-    .messages.create({ body: body })
-    .then(() => next())
+    client.conversations.conversations(conversationSid).messages.create({ body: body })
     .catch((err) => console.log("Error in 'sendMessageToParticipant' middleware: ", err));
   }
+
+  return;
 };
-
-
 
 const deleteConversation = (req, res, next) => {
   const { conversationSid } = req.body;
@@ -77,7 +60,6 @@ const deleteConversation = (req, res, next) => {
 
 module.exports = {
   createConversation,
-  addParticipantToConversation,
   sendMessageToParticipant,
   listAllMessagesWithParticpant,
   deleteConversation

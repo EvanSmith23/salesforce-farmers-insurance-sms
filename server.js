@@ -76,21 +76,8 @@ SMS Flow
     A: Nope
 */
 
-app.post('/sms', 
-    createConversation,
-    //addParticipantToConversation,
-    listAllMessagesWithParticpant, 
-    (req, res) => {
+app.post('/sms', createConversation, (req, res) => {
     const twiml = new MessagingResponse();
-
-    console.log(req.body)
-    console.log("From: ", req.body.From)
-    console.log("Body: ", req.body.Body);
-
-    sendMessageToParticipant(res.locals.convsersationSID, req.body.Body);
-
-
-    console.log(res.locals.messages);
 
     if (req.body.Body == "Hey"){
         twiml.message("How can I help you today? Text 1 to Pay My Bill. Text 2 to Add Driver. Text 3 to Remove Driver. Text 4 to Add Vehicle. Text 5 to Remove Vehicle.");
@@ -101,6 +88,9 @@ app.post('/sms',
     }
 
     res.type('text/xml').send(twiml.toString());
+
+    sendMessageToParticipant(res.locals.convsersationSID, req.body.Body);
+    listAllMessagesWithParticpant(res.locals.convsersationSID);
 });
 
 app.get("/", (req, res) => {
