@@ -75,6 +75,19 @@ SMS Flow
     A: Nope
 */
 
+let responses = [
+    "You want to add a new vehicle to your policy, is that correct? Y/N",
+    "Do you have the vehicles VIN Number? Y/N",
+    "Please enter the vehicles VIN Number",
+    "Is this vehicle a White 2022 Honda Pilot? Y/N",
+    "What is the purchase price of the vehicle?",
+    "Your new six monthly premium will be $1508, Do you accept?",
+    "This vehicle has been added to your policy! Is there anything else I can help you with?",
+    "Yes - let me transfer you to a Customer Service Rep",
+    "This is Tim Service, I see you want to change payment terms from Semi-Annually to Monthly. The new monthly cost will be $283.61 Does that work for you?",
+    "I have made the change, you are all set. Is there anything else I can help you with?"
+]
+
 app.post('/sms', createConversation, async (req, res) => {
     let counter = req.session.counter || 0;
 
@@ -82,12 +95,10 @@ app.post('/sms', createConversation, async (req, res) => {
 
     const twiml = new MessagingResponse();
 
-    if (req.body.Body == "Hey"){
-        await twiml.message("How can I help you today? Text 1 to Pay My Bill. Text 2 to Add Driver. Text 3 to Remove Driver. Text 4 to Add Vehicle. Text 5 to Remove Vehicle.");
-    } else if (req.body.Body == "4") {
-        await twiml.message("Do you have the vehicles VIN Number? Text 1 for Yes. Text 2 for No.");
-    } else if (req.body.Body == "1") {
-        await twiml.message("Please enter the vehicles VIN Number");
+    if (req.body.Body == "Reset"){
+        req.session.counter = 0;
+    } else {
+        await twiml.message(responses[counter]);
     }
 
     if (counter > 0) {
