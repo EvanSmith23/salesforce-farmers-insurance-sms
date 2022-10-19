@@ -98,7 +98,11 @@ app.post('/sms', createConversation, async (req, res) => {
     if (req.body.Body == "Reset"){
         req.session.counter = 0;
     } else {
-        await twiml.message(responses[counter]);
+        if (counter == 7){
+            await twiml.message(responses[counter]);
+            await twiml.message(responses[counter + 1]);
+            req.session.counter = counter + 1;
+        }
 
         req.session.counter = counter + 1;
         
