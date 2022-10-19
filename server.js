@@ -11,8 +11,7 @@ const { MessagingResponse } = require('twilio').twiml;
 
 const {
     createConversation,
-    addParticipantToConversation,
-    sendMessageToParticipant,
+    addMessageToConversation,
     listAllMessagesWithParticpant,
     deleteConversation
   } = require("./middleware/conversations");
@@ -77,6 +76,10 @@ SMS Flow
 */
 
 app.post('/sms', createConversation, async (req, res) => {
+    let counter = req.session.counter || 0;
+
+    console.log("After: ", counter);
+
     const twiml = new MessagingResponse();
 
     if (req.body.Body == "Hey"){
@@ -87,10 +90,17 @@ app.post('/sms', createConversation, async (req, res) => {
         await twiml.message("Please enter the vehicles VIN Number");
     }
 
-    await res.type('text/xml').send(twiml.toString());
+    if (counter > 0) {
+        req.session.counter = counter + 1;
+    } else {
+        req.session.counter = 1;
+    }
 
-    await sendMessageToParticipant(res.locals.convsersationSID, req.body.Body);
-    await listAllMessagesWithParticpant(res.locals.convsersationSID);
+    console.log("After: ", req.session.counter);
+ 
+    await res.type('text/xml').send(twiml.toString());
+    // await addMessageToConversation(res.locals.convsersationSID, req.body.Body);
+    // await listAllMessagesWithParticpant(res.locals.convsersationSID);
 });
 
 app.get("/", (req, res) => {

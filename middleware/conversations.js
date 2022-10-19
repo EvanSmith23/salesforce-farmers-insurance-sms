@@ -17,31 +17,29 @@ const createConversation = (req, res, next) => {
 };
 
 
+// MBc6c91ee2369d4e5081e81457feeb31bc
+const addMessageToConversation = async (conversationSid, body) => {
+  console.log("ADD MESSAGE TO CONVERSATION");
+
+  if (conversationSid) {
+    await client.conversations.conversations(conversationSid).messages.create({ body: body })
+    .catch((err) => console.log("Error in 'sendMessageToParticipant' middleware: ", err));
+  }
+
+  return;
+};
+
 const listAllMessagesWithParticpant = async (conversationSid) => {
   console.log("LIST ALL MESSAGES");
 
   if (conversationSid) {
-    await client.conversations
-    .conversations(conversationSid)
-    .messages.list({})
+    await client.conversations.conversations(conversationSid).messages.list({})
     .then((messages) => {
       console.log("Messages: ", messages);
       res.locals.messages = messages;
       res.locals.participantId;
     })
     .catch((err) => console.log("Error in 'listAllMessagesWithParticpant' middleware: ", err));
-  }
-
-  return;
-};
-
-// MBc6c91ee2369d4e5081e81457feeb31bc
-const sendMessageToParticipant = async (conversationSid, body) => {
-  console.log("ADD MESSAGE TO CONVERSATION");
-
-  if (conversationSid) {
-    await client.conversations.conversations(conversationSid).messages.create({ body: body })
-    .catch((err) => console.log("Error in 'sendMessageToParticipant' middleware: ", err));
   }
 
   return;
@@ -60,7 +58,7 @@ const deleteConversation = (req, res, next) => {
 
 module.exports = {
   createConversation,
-  sendMessageToParticipant,
+  addMessageToConversation,
   listAllMessagesWithParticpant,
   deleteConversation
 };
