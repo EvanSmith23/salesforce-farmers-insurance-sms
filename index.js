@@ -21,8 +21,6 @@ app.use(bodyParser.json());
 app.use(cors());
 
 const {
-  sendMessageToEvan,
-  sendMessageFromEvan,
   createConversation,
   addParticipantToConversation,
   sendMessageToParticipant,

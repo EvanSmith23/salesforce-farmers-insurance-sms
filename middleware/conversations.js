@@ -18,6 +18,8 @@ const createConversation = (req, res, next) => {
 
 
 const listAllMessagesWithParticpant = (req, res, next) => {
+  console.log("listAllMessagesWithParticpant");
+
   if (res.locals.conversationSid) {
     client.conversations
     .conversations(conversationSid)
