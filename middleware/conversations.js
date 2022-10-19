@@ -22,7 +22,7 @@ const listAllMessagesWithParticpant = (req, res, next) => {
 
   if (res.locals.conversationSid) {
     client.conversations
-    .conversations(conversationSid)
+    .conversations(res.locals.conversationSid)
     .messages.list({})
     .then((messages) => {
       res.locals.messages = messages;
