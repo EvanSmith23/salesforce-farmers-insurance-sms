@@ -83,7 +83,7 @@ let responses = [
     "What is the purchase price of the vehicle?",
     "Your new six monthly premium will be $1508, Do you accept?",
     "This vehicle has been added to your policy! Is there anything else I can help you with?",
-    "Yes - let me transfer you to a Customer Service Rep",
+    "Let me transfer you to a Customer Service Rep",
     "This is Tim Service, I see you want to change payment terms from Semi-Annually to Monthly. The new monthly cost will be $283.61 Does that work for you?",
     "I have made the change, you are all set. Is there anything else I can help you with?"
 ]
@@ -107,9 +107,11 @@ app.post('/sms', createConversation, async (req, res) => {
 
             await res.type('text/xml').send(twiml.toString());
 
-            await twiml.message(responses[counter + 1]);
+            const twiml2 = new MessagingResponse();
 
-            await res.type('text/xml').send(twiml.toString());
+            await twiml2.message(responses[counter + 1]);
+
+            await res.type('text/xml').send(twiml2.toString());
 
             req.session.counter = counter + 2;
         } else {
