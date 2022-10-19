@@ -10,8 +10,6 @@ const app = express();
 const { MessagingResponse } = require('twilio').twiml;
 
 const {
-    sendMessageToEvan,
-    sendMessageFromEvan,
     createConversation,
     addParticipantToConversation,
     sendMessageToParticipant,

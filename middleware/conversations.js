@@ -78,8 +78,6 @@ const deleteConversation = (req, res, next) => {
 }
 
 module.exports = {
-  sendMessageToEvan,
-  sendMessageFromEvan,
   createConversation,
   addParticipantToConversation,
   sendMessageToParticipant,
