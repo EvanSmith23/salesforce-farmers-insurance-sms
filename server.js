@@ -96,13 +96,13 @@ app.post('/sms', createConversation, async (req, res) => {
     const twiml = new MessagingResponse();
 
     if (req.body.Body == "Reset"){
-        console.log('here1');
         req.session.counter = 0;
     } else {
-        console.log('here2');
         await twiml.message(responses[counter]);
-        await res.type('text/xml').send(twiml.toString());
+
         req.session.counter = counter + 1;
+        
+        await res.type('text/xml').send(twiml.toString());
     }
 
     console.log("After: ", req.session.counter);
