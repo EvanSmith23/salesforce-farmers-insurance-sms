@@ -49,19 +49,21 @@ app.use((req, res, next) => {
 });
 
 app.post('/sms', (req, res) => {
+    const twiml = new MessagingResponse();
+
     console.log(req.body)
     console.log("From: ", req.body.From)
     console.log("Body: ", req.body.Body)
 
-    const twiml = new MessagingResponse();
-  
-    twiml.message('The Robots are coming! Head for the hills!');
-  
+    if (req.body.Body == "Help"){
+        twiml.message('How can I help you today? \n Text 1 to Pay My Bill. Text 2 to Add Driver. Text 3 to Remove Driver. Text 4 to Add Vehicle. Text 5 to Remove Vehicle.');
+    }
+
     res.type('text/xml').send(twiml.toString());
 });
 
 app.get("/", (req, res) => {
-    res.send("Arrow Plumbing Messaging API working!");
+    res.send("Farmers Insurance SMS!");
 });
 
 // Catch any promise rejections
