@@ -7,6 +7,7 @@ const cors = require("cors");
 
 const { Server } = require("socket.io");
 const http = require("http");
+const MessagingResponse = require('twilio').twiml.MessagingResponse;
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
@@ -21,6 +22,8 @@ app.use(bodyParser.json());
 app.use(cors());
 
 const {
+  sendMessageToEvan,
+  sendMessageFromEvan,
   createConversation,
   addParticipantToConversation,
   sendMessageToParticipant,
@@ -44,9 +47,24 @@ app.post(
   }
 );
 
+app.post("/send-message", sendMessageToEvan, (req, res) => {
+  res.json({ status: "success" });
+});
+
 // converstaionId
+/*
 app.post("/send-message", sendMessageToParticipant, (req, res) => {
   res.json({ status: "success" });
+});
+*/
+
+app.post("/sms", sendMessageToEvan, (req, res) => {
+    const twiml = new MessagingResponse()
+
+    twiml.message('testing 123')
+
+    res.writeHead(200, {'Content-Type': 'text/xml'})
+    res.end(twiml.toString())
 });
 
 app.post("/list-messages", listAllMessagesWithParticpant, (req, res) => {

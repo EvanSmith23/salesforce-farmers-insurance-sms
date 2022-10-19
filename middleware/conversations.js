@@ -2,8 +2,32 @@ const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require("twilio")(accountSid, authToken);
 
+const sendMessageToEvan = () => {
+  console.log("SEND MESSAGE TO EVAN");
+
+  client.messages
+  .create({
+     body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
+     from: '+16812983972',
+     to: '+13122610622'
+   })
+  .then(message => console.log(message));
+};
+
+const sendMessageFromEvan = () => {
+  console.log("SEND MESSAGE FROM EVAN");
+
+  client.messages
+  .create({
+     body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
+     from: '+13122610622',
+     to: '+16812983972'
+   })
+  .then(message => console.log(message));
+};
+
 const createConversation = (req, res, next) => {
-  console.log("CREATE CONVERSATIOn");
+  console.log("CREATE CONVERSATION");
   client.conversations.conversations
     .create({ friendlyName: 'Friendly Conversation' })
     .then((conversation) => {
@@ -21,8 +45,8 @@ const addParticipantToConversation = (req, res, next) => {
   client.conversations
     .conversations(conversationSid)
     .participants.create({
-      "messagingBinding.address": participantNumber,
-      "messagingBinding.proxyAddress": twilioNumber,
+      "messagingBinding.address": "+13122610622",
+      "messagingBinding.proxyAddress": "+16812983972",
     })
     .then((participant) => {
       console.log("INSIDE INSIDe", participant);
@@ -73,6 +97,8 @@ const deleteConversation = (req, res, next) => {
 }
 
 module.exports = {
+  sendMessageToEvan,
+  sendMessageFromEvan,
   createConversation,
   addParticipantToConversation,
   sendMessageToParticipant,
