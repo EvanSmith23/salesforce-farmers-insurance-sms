@@ -106,13 +106,15 @@ app.post('/sms', createConversation, async (req, res) => {
             await twiml.message(responses[counter]);
 
             await twiml.message(responses[counter + 1]);
-            
-            req.session.counter = counter + 1;
-        }
 
-        req.session.counter = counter + 1;
-        
-        await res.type('text/xml').send(twiml.toString());
+            req.session.counter = counter + 2;
+        } else {
+            await twiml.message(responses[counter]);
+
+            req.session.counter = counter + 1;
+
+            await res.type('text/xml').send(twiml.toString());
+        }
     }
 
     console.log("After: ", req.session.counter);
