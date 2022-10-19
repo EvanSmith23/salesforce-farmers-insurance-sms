@@ -2,40 +2,32 @@ const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require("twilio")(accountSid, authToken);
 
-const sendMessageToEvan = () => {
-  console.log("SEND MESSAGE TO EVAN");
-
-  client.messages
-  .create({
-     body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
-     from: '+16812983972',
-     to: '+13122610622'
-   })
-  .then(message => console.log(message));
-};
-
-const sendMessageFromEvan = () => {
-  console.log("SEND MESSAGE FROM EVAN");
-
-  client.messages
-  .create({
-     body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
-     from: '+13122610622',
-     to: '+16812983972'
-   })
-  .then(message => console.log(message));
-};
-
 const createConversation = (req, res, next) => {
   console.log("CREATE CONVERSATION");
-  client.conversations.conversations
+  if (!res.locals.conversationSid) {
+    client.conversations.conversations
     .create({ friendlyName: 'Friendly Conversation' })
     .then((conversation) => {
-      console.log(conversation.sid);
       res.locals.conversationSid = conversation.sid;
       next();
     })
-    .catch((err) => console.log("Error in 'createConversation' middleware: ", err));
+    .catch((err) => console.log("Error in 'createConversation' middleware: ", err));  
+  }
+};
+
+
+const listAllMessagesWithParticpant = (req, res, next) => {
+  if (!res.locals.conversationSid) {
+    client.conversations
+    .conversations(conversationSid)
+    .messages.list({})
+    .then((messages) => {
+      res.locals.messages = messages;
+      res.locals.participantId;
+    })
+    .then(() => next())
+    .catch((err) => console.log("Error in 'listAllMessagesWithParticpant' middleware: ", err));
+  }
 };
 
 const addParticipantToConversation = (req, res, next) => {
@@ -72,18 +64,7 @@ const sendMessageToParticipant = (req, res, next) => {
     .catch((err) => console.log("Error in 'sendMessageToParticipant' middleware: ", err));
 };
 
-const listAllMessagesWithParticpant = (req, res, next) => {
-  const { conversationSid, participantId } = req.body;
-  client.conversations
-    .conversations(conversationSid)
-    .messages.list({})
-    .then((messages) => {
-      res.locals.messages = messages;
-      res.locals.participantId;
-    })
-    .then(() => next())
-    .catch((err) => console.log("Error in 'listAllMessagesWithParticpant' middleware: ", err));
-};
+
 
 const deleteConversation = (req, res, next) => {
   const { conversationSid } = req.body;

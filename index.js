@@ -57,7 +57,7 @@ app.post("/send-message", sendMessageToParticipant, (req, res) => {
 });
 */
 
-app.post('/sms', (req, res) => {
+app.post('/sms', createConversation, listAllMessagesWithParticpant, (req, res) => {
   const twiml = new MessagingResponse();
 
   twiml.message('The Robots are coming! Head for the hills!');
