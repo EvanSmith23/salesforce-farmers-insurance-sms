@@ -96,9 +96,12 @@ app.post('/sms', createConversation, async (req, res) => {
     const twiml = new MessagingResponse();
 
     if (req.body.Body == "Reset"){
+        console.loog('here1');
         req.session.counter = 0;
     } else {
+        console.loog('here2');
         await twiml.message(responses[counter]);
+        await res.type('text/xml').send(twiml.toString());
     }
 
     if (counter > 0) {
@@ -108,10 +111,6 @@ app.post('/sms', createConversation, async (req, res) => {
     }
 
     console.log("After: ", req.session.counter);
- 
-    await res.type('text/xml').send(twiml.toString());
-    // await addMessageToConversation(res.locals.convsersationSID, req.body.Body);
-    // await listAllMessagesWithParticpant(res.locals.convsersationSID);
 });
 
 app.get("/", (req, res) => {
