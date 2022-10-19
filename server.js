@@ -56,7 +56,7 @@ app.post('/sms', (req, res) => {
     console.log("Body: ", req.body.Body)
 
     if (req.body.Body == "Help"){
-        twiml.message('How can I help you today? \n Text 1 to Pay My Bill. Text 2 to Add Driver. Text 3 to Remove Driver. Text 4 to Add Vehicle. Text 5 to Remove Vehicle.');
+        twiml.message('How can I help you today? Text 1 to Pay My Bill. Text 2 to Add Driver. Text 3 to Remove Driver. Text 4 to Add Vehicle. Text 5 to Remove Vehicle.');
     }
 
     res.type('text/xml').send(twiml.toString());
