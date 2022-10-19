@@ -8,6 +8,7 @@ const createConversation = (req, res, next) => {
     client.conversations.conversations
     .create({ friendlyName: 'Friendly Conversation' })
     .then((conversation) => {
+      console.log(conversation)
       res.locals.conversationSid = conversation.sid;
       next();
     })
@@ -17,7 +18,7 @@ const createConversation = (req, res, next) => {
 
 
 const listAllMessagesWithParticpant = (req, res, next) => {
-  if (!res.locals.conversationSid) {
+  if (res.locals.conversationSid) {
     client.conversations
     .conversations(conversationSid)
     .messages.list({})
