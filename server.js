@@ -96,7 +96,7 @@ app.post('/sms', createConversation, async (req, res) => {
     const twiml = new MessagingResponse();
 
     if (req.body.Body == "Reset"){
-        console.loog('here1');
+        console.log('here1');
         req.session.counter = 0;
     } else {
         console.loog('here2');
