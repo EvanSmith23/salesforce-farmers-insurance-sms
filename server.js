@@ -99,7 +99,7 @@ app.post('/sms', createConversation, async (req, res) => {
         console.log('here1');
         req.session.counter = 0;
     } else {
-        console.loog('here2');
+        console.log('here2');
         await twiml.message(responses[counter]);
         await res.type('text/xml').send(twiml.toString());
     }
