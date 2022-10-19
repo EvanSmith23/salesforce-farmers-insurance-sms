@@ -48,7 +48,37 @@ app.use((req, res, next) => {
     next();
 });
 
-app.post('/sms', (req, res) => {
+
+/*
+SMS Flow
+    Q: How can I help you today? Text 1 to Pay My Bill. Text 2 to Add Driver. Text 3 to Remove Driver. Text 4 to Add Vehicle. Text 5 to Remove Vehicle.
+    A: 4
+    Q: Do you have the vehicles VIN Number? Text 1 for Yes. Text 2 for No.
+    A: 1
+    Q: Please enter the vehicles VIN Number
+    A: 23sf0sdfj450jga
+    Q: This vehicle has been added to your policy!
+    Q: Is there anything else I can help you with? Text 1 to Pay My Bill. Text 2 to Add Driver. Text 3 to Remove Driver. Text 4 to Add Vehicle. Text 5 to Remove Vehicle.
+    A: 2
+    Q: Please Enter the New Drivers Full Name
+    A: Rachel Morris
+    Q: Please Enter the New Drivers Date of Birth
+    A: Enter DOB
+    Q: Please Enter the Driver License State
+    A: Enter State
+    Q: Please Enter Driver License Number
+    A: Enter Number
+    Q: You're new quote is $4560
+    Q: Any thing else I can help you with?
+    A: Can i pay monthly
+    Q: Yes - let me transfer you to a Customer Service Rep
+    Q: This is Tim Service, I see you want to change payment terms from Semi-Annually to Monthly. The new monthly cost will be "$283.61" Does that work for you?
+    A: Yes
+    Q: Is there anything else I can help you with?
+    A: Nope
+*/
+
+app.post('/sms', listAllMessagesWithParticpant, (req, res) => {
     const twiml = new MessagingResponse();
 
     console.log(req.body)
@@ -58,7 +88,7 @@ app.post('/sms', (req, res) => {
     if (req.body.Body == "Hey"){
         twiml.message("How can I help you today? Text 1 to Pay My Bill. Text 2 to Add Driver. Text 3 to Remove Driver. Text 4 to Add Vehicle. Text 5 to Remove Vehicle.");
     } else if (req.body.Body == "4") {
-        twiml.message("Do you have the vehicles VIN Number?");
+        twiml.message("Do you have the vehicles VIN Number? Text 1 for Yes. Text 2 for No.");
     } else if (req.body.Body == "1") {
         twiml.message("Please enter the vehicles VIN Number");
     }
