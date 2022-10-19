@@ -25,6 +25,7 @@ const listAllMessagesWithParticpant = (req, res, next) => {
     .conversations(res.locals.conversationSid)
     .messages.list({})
     .then((messages) => {
+      console.log("Messages: ", messages);
       res.locals.messages = messages;
       res.locals.participantId;
     })
