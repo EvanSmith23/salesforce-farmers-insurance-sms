@@ -7,7 +7,6 @@ const cors = require("cors");
 
 const { Server } = require("socket.io");
 const http = require("http");
-const MessagingResponse = require('twilio').twiml.MessagingResponse;
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
@@ -32,7 +31,7 @@ const {
 } = require("./middleware/conversations");
 
 app.get("/", (req, res) => {
-  res.send("Farmers Insurance SMS");
+  res.send("Arrow Plumbing Messaging API working!");
 });
 
 // twilioNumber, participantNumber
@@ -47,7 +46,7 @@ app.post(
   }
 );
 
-app.post("/send-message", sendMessageToEvan, (req, res) => {
+app.post("/send-message", sendMessageEvan, (req, res) => {
   res.json({ status: "success" });
 });
 
@@ -58,13 +57,12 @@ app.post("/send-message", sendMessageToParticipant, (req, res) => {
 });
 */
 
-app.post("/sms", sendMessageToEvan, (req, res) => {
-    const twiml = new MessagingResponse()
+app.post('/sms', (req, res) => {
+  const twiml = new MessagingResponse();
 
-    twiml.message('testing 123')
+  twiml.message('The Robots are coming! Head for the hills!');
 
-    res.writeHead(200, {'Content-Type': 'text/xml'})
-    res.end(twiml.toString())
+  res.type('text/xml').send(twiml.toString());
 });
 
 app.post("/list-messages", listAllMessagesWithParticpant, (req, res) => {
