@@ -91,7 +91,7 @@ let responses = [
 app.post('/sms', createConversation, async (req, res) => {
     let counter = req.session.counter || 0;
 
-    console.log("After: ", counter);
+    console.log("Before: ", req.session.counter);
 
     const twiml = new MessagingResponse();
 
@@ -102,12 +102,7 @@ app.post('/sms', createConversation, async (req, res) => {
         console.log('here2');
         await twiml.message(responses[counter]);
         await res.type('text/xml').send(twiml.toString());
-    }
-
-    if (counter > 0) {
         req.session.counter = counter + 1;
-    } else {
-        req.session.counter = 1;
     }
 
     console.log("After: ", req.session.counter);
