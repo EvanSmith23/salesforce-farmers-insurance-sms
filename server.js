@@ -50,6 +50,9 @@ app.use((req, res, next) => {
 
 app.post('/sms', (req, res) => {
     console.log(req.body)
+    console.log("From: ", req.body.From)
+    console.log("Body: ", req.body.Body)
+
     const twiml = new MessagingResponse();
   
     twiml.message('The Robots are coming! Head for the hills!');
