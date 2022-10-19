@@ -76,7 +76,12 @@ SMS Flow
     A: Nope
 */
 
-app.post('/sms', createConversation, listAllMessagesWithParticpant, (req, res) => {
+app.post('/sms', 
+    createConversation,
+    addParticipantToConversation,
+    sendMessageToParticipant,
+    listAllMessagesWithParticpant, 
+    (req, res) => {
     const twiml = new MessagingResponse();
 
     console.log(req.body)

@@ -35,11 +35,10 @@ const listAllMessagesWithParticpant = (req, res, next) => {
 };
 
 const addParticipantToConversation = (req, res, next) => {
-  const { conversationSid } = res.locals;
-  const { twilioNumber, participantNumber } = req.body;
   console.log("IN ADD PARTICIPANTS");
-  client.conversations
-    .conversations(conversationSid)
+  if (res.locals.conversationSid) {
+    client.conversations
+    .conversations(res.locals.conversationSid)
     .participants.create({
       "messagingBinding.address": "+13122610622",
       "messagingBinding.proxyAddress": "+16812983972",
@@ -51,21 +50,23 @@ const addParticipantToConversation = (req, res, next) => {
       next();
     })
     .catch((err) => console.log("Error in 'addParticipantToConversation' middleware: ", err));
+  }
 };
 
 // MBc6c91ee2369d4e5081e81457feeb31bc
 const sendMessageToParticipant = (req, res, next) => {
-  const { conversationSid, messageBody } = req.body;
   console.log("INSIDE SEND MESSAGE");
-  client.conversations
-    .conversations(conversationSid)
-    .messages.create({ body: messageBody })
+  if (res.locals.conversationSid) {
+    client.conversations
+    .conversations(res.locals.conversationSid)
+    .messages.create({ body: "Hi There" })
     .then((message) => {
       console.log(message.sid);
       console.log("INSIDE SEND MESSAGE");
     })
     .then(() => next())
     .catch((err) => console.log("Error in 'sendMessageToParticipant' middleware: ", err));
+  }
 };
 
 
