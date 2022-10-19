@@ -78,7 +78,7 @@ SMS Flow
 
 app.post('/sms', 
     createConversation,
-    addParticipantToConversation,
+    //addParticipantToConversation,
     sendMessageToParticipant,
     listAllMessagesWithParticpant, 
     (req, res) => {

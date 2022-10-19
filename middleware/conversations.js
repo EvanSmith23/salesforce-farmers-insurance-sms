@@ -37,9 +37,7 @@ const listAllMessagesWithParticpant = (req, res, next) => {
 const addParticipantToConversation = (req, res, next) => {
   console.log("IN ADD PARTICIPANTS");
   if (res.locals.conversationSid) {
-    client.conversations
-    .conversations(res.locals.conversationSid)
-    .participants.create({
+    client.conversations.v1.conversations(res.locals.conversationSid).participants.create({
       "messagingBinding.address": "+13122610622",
       "messagingBinding.proxyAddress": "+16812983972",
     })
