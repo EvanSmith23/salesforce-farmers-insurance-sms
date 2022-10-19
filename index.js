@@ -32,7 +32,7 @@ const {
 } = require("./middleware/conversations");
 
 app.get("/", (req, res) => {
-  res.send("Arrow Plumbing Messaging API working!");
+  res.send("Farmers Insurance SMS");
 });
 
 // twilioNumber, participantNumber
