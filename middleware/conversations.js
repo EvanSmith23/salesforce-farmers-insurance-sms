@@ -52,16 +52,11 @@ const addParticipantToConversation = (req, res, next) => {
 };
 
 // MBc6c91ee2369d4e5081e81457feeb31bc
-const sendMessageToParticipant = (req, res, next) => {
-  console.log("INSIDE SEND MESSAGE");
-  if (res.locals.conversationSid) {
+const sendMessageToParticipant = (conversationSid, body) => {
+  if (conversationSid) {
     client.conversations
-    .conversations(res.locals.conversationSid)
-    .messages.create({ body: "Hi There" })
-    .then((message) => {
-      console.log(message.sid);
-      console.log("INSIDE SEND MESSAGE");
-    })
+    .conversations(conversationSid)
+    .messages.create({ body: body })
     .then(() => next())
     .catch((err) => console.log("Error in 'sendMessageToParticipant' middleware: ", err));
   }
