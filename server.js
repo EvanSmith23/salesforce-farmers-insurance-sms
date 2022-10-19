@@ -105,7 +105,11 @@ app.post('/sms', createConversation, async (req, res) => {
         if (counter == 7){
             await twiml.message(responses[counter]);
 
+            await res.type('text/xml').send(twiml.toString());
+
             await twiml.message(responses[counter + 1]);
+
+            await res.type('text/xml').send(twiml.toString());
 
             req.session.counter = counter + 2;
         } else {
