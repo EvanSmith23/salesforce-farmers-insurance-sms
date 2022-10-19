@@ -17,11 +17,11 @@ const createConversation = (req, res, next) => {
 };
 
 
-const listAllMessagesWithParticpant = (conversationSid) => {
+const listAllMessagesWithParticpant = async (conversationSid) => {
   console.log("LIST ALL MESSAGES");
 
   if (conversationSid) {
-    client.conversations
+    await client.conversations
     .conversations(conversationSid)
     .messages.list({})
     .then((messages) => {
@@ -36,11 +36,11 @@ const listAllMessagesWithParticpant = (conversationSid) => {
 };
 
 // MBc6c91ee2369d4e5081e81457feeb31bc
-const sendMessageToParticipant = (conversationSid, body) => {
+const sendMessageToParticipant = async (conversationSid, body) => {
   console.log("ADD MESSAGE TO CONVERSATION");
 
   if (conversationSid) {
-    client.conversations.conversations(conversationSid).messages.create({ body: body })
+    await client.conversations.conversations(conversationSid).messages.create({ body: body })
     .catch((err) => console.log("Error in 'sendMessageToParticipant' middleware: ", err));
   }
 

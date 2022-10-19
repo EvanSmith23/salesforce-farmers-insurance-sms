@@ -76,21 +76,21 @@ SMS Flow
     A: Nope
 */
 
-app.post('/sms', createConversation, (req, res) => {
+app.post('/sms', createConversation, async (req, res) => {
     const twiml = new MessagingResponse();
 
     if (req.body.Body == "Hey"){
-        twiml.message("How can I help you today? Text 1 to Pay My Bill. Text 2 to Add Driver. Text 3 to Remove Driver. Text 4 to Add Vehicle. Text 5 to Remove Vehicle.");
+        await twiml.message("How can I help you today? Text 1 to Pay My Bill. Text 2 to Add Driver. Text 3 to Remove Driver. Text 4 to Add Vehicle. Text 5 to Remove Vehicle.");
     } else if (req.body.Body == "4") {
-        twiml.message("Do you have the vehicles VIN Number? Text 1 for Yes. Text 2 for No.");
+        await twiml.message("Do you have the vehicles VIN Number? Text 1 for Yes. Text 2 for No.");
     } else if (req.body.Body == "1") {
-        twiml.message("Please enter the vehicles VIN Number");
+        await twiml.message("Please enter the vehicles VIN Number");
     }
 
-    res.type('text/xml').send(twiml.toString());
+    await res.type('text/xml').send(twiml.toString());
 
-    sendMessageToParticipant(res.locals.convsersationSID, req.body.Body);
-    listAllMessagesWithParticpant(res.locals.convsersationSID);
+    await sendMessageToParticipant(res.locals.convsersationSID, req.body.Body);
+    await listAllMessagesWithParticpant(res.locals.convsersationSID);
 });
 
 app.get("/", (req, res) => {
