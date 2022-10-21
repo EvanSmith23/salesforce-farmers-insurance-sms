@@ -81,10 +81,10 @@ let responses = [
     "Please enter the vehicles VIN Number",
     "Is this vehicle a White 2022 Honda Pilot? Y/N",
     "What is the purchase price of the vehicle?",
-    "Your new six monthly premium will be $1508, Do you accept?",
+    "Your new six month premium will be $1508, Do you accept? Y/N",
     "This vehicle has been added to your policy! Is there anything else I can help you with?",
     "Let me transfer you to a Customer Service Rep",
-    "This is Tim Service, I see you want to change payment terms from Semi-Annually to Monthly. The new monthly cost will be $283.61 Does that work for you?",
+    "This is Tim Service, I see you want to change payment terms from Semi-Annually to Monthly. The new monthly cost will be $283.61 Does that work for you? Y/N",
     "I have made the change, you are all set. Is there anything else I can help you with?"
 ]
 
