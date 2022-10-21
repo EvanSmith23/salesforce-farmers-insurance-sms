@@ -84,7 +84,7 @@ let responses = [
     "Your new six month premium will be $1508, Do you accept? Y/N",
     "This vehicle has been added to your policy! Is there anything else I can help you with?",
     "Let me transfer you to a Customer Service Rep",
-    "This is Tim Service, I see you want to change payment terms from Semi-Annually to Monthly. The new monthly cost will be $283.61 Does that work for you? Y/N",
+    "Hello Rachel and congrats on the new car! This is Tim Service and I see you want to change payment terms from Semi-Annually to Monthly. The new monthly cost will be $283.61. Does that work for you? Y/N",
     "I have made the change, you are all set. Is there anything else I can help you with?"
 ]
 
